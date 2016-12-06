@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<body>
+
+	<h2>Shoe Products</h2>
+
+	<p id="demo"></p>
+
+	<script>
+		var text = {{s_data|tojson}};
+
+		//document.write(text);
+		var obj = JSON.parse(text);
+		//var key1 = 'title@6pm';
+		//document.write(obj['title@6pm']);
+	/*
+		for (var key in obj) {
+  if (obj.hasOwnProperty(key)) {
+    document.write(key + " -> " + obj[key1]);
+  }
+}
+	*/
+		
+		var str = "Link to product";
+		var link = str.link(obj['url@6pm']);
+		var val = obj['img@6pm'];
+		img = document.createElement('img');
+		img.src = val;
+		img.style.height = '300px';
+		img.style.width = '300px';
+		document.body.appendChild(img);
+		document.write("<p>" + "URL: " + link  + "<br>");
+		document.write("NOW PRICE: " + obj['now_price@6pm'] + "<br>");
+		document.write("OLD PRICE: " + obj['old_price@6pm'] + "<br>");
+		document.write("COLOR: " + obj['color@6pm']);
+		
+	</script>
+
+</body>
+</html>

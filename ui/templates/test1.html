@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+<head>
+	
+	<style type="text/css">
+		table {
+    table-layout: auto;
+    border-collapse: collapse;
+    width: 100%;
+}
+table td {
+    border: 1px solid #ccc;
+}
+table td.absorbing-column {
+    width: 100%;
+}
+
+.img {
+    position: relative;
+    float: left;
+    width:  100px;
+    height: 100px;
+    background-position: 50% 50%;
+    background-repeat:   no-repeat;
+    background-size:     cover;
+}
+
+	</style>
+</head>
+<html>
+<body>
+
+	<h2>Shoe Products</h2>
+
+	<p id="demo"></p>
+
+	<script>
+		var text = {{s_data|tojson}};
+		//document.write(text);
+		var obj1 = JSON.parse(text);
+
+		var obj = obj1['results'];
+		var rec_obj = obj1['recommend'];
+		var past_hist = obj1['past_history'];
+		//document.write(JSON.stringify(rec_obj));
+
+		//document.write(text);
+		var dic = {}
+		for (var key in obj){
+			var myTable= "<table><tr>";
+			var gender = "";
+			//document.write("<tr><td style='width: 100px'")
+			if ((typeof obj[key]["url@6pm"] != 'undefined')){
+				var str = "Link to product";
+				var link = str.link(obj[key]['url@6pm']);
+				var val = obj[key]['img@6pm'];
+				var desc = obj[key]['imp_desc@6pm'];
+				console.log(desc);
+				if(desc.includes("women")){
+					gender = "women";
+				}
+				else if(desc.includes("men")){
+					gender = "men";
+				}
+				else if(desc.includes("girl")){
+					gender = "girl";
+				}
+				else if(desc.includes("boy")){
+					gender = "boy";
+				}
+				
+				console.log(gender);
+				/*
+				img = document.createElement('img');
+				img.src = val;
+				img.style.height = '300px';
+				img.style.width = '300px';
+				*/
+				
+				myTable += "<td>" + 
+					//document.body.appendChild(img) + 
+					"<img style='width:300px; height=300px;'src=" + val + " >" +
+					"<p>" + "URL: " + link  + "<br>" + 
+					"SELLER: " + "6pm" + "<br>" +
+					"BRAND: " + obj[key]['brand@6pm'] + "<br>" +
+					"GENDER: " + gender + "<br>" +
+					"NOW PRICE: " + obj[key]['now_price@6pm'] + "<br>" +
+					"OLD PRICE: " + obj[key]['orig_price@6pm'] + "<br>" +
+					"COLOR: " + obj[key]['color@6pm'] + "<br>"
+					+ "</td>";
+
+				dic[obj[key]["url@6pm"]] = 1
+			}
+
+			if ((typeof obj[key]["url@eastbay"] != 'undefined')){
+				var str = "Link to product";
+				var link = str.link(obj[key]['url@eastbay']);
+				var val = "http://" + obj[key]['img@eastbay'];
+				/*
+				img = document.createElement('img');
+				img.src = val;
+				img.style.height = '300px';
+				img.style.width = '300px';
+				*/
+				
+				myTable += "<td>" + 
+					//document.body.appendChild(img) +
+					"<img style='width:300px; height=300px;'src=" + val + " >" +
+					"<p>" + "URL: " + link  + "<br>" +
+					"SELLER: " + "Eastbay" + "<br>" +
+					"SKU: " + obj[key]['sku@eastbay'] + "<br>" +
+					"GENDER: " + obj[key]['gender@eastbay'] + "<br>" +
+					"NOW PRICE: " + obj[key]['now_price@eastbay'] + "<br>" +
+					"OLD PRICE: " + obj[key]['orig_price@eastbay'] + "<br>"
+					+ "</td>";
+
+				dic[obj[key]["url@eastbay"]] = 1
+			}
+
+			if ((typeof obj[key]["url@zappos"] != 'undefined')){
+				var str = "Link to product";
+				var link = str.link(obj[key]['url@zappos']);
+				var val = obj[key]['img@zappos'];
+				/*
+				img = document.createElement('img');
+				img.src = val;
+				img.style.height = '300px';
+				img.style.width = '300px';
+				*/
+				
+				myTable += "<td>" + 
+					//document.body.appendChild(img) +
+					"<img style='width:300px; height=300px;'src=" + val + " >" +
+					"<p>" + "URL: " + link  + "<br>" +
+					"SELLER: " + "Zappos" + "<br>" +
+					"SKU: " + obj[key]['sku@zappos'] + "<br>" +
+					"BRAND: " + obj[key]['description@zappos'] + "<br>" +
+					"NOW PRICE: " + obj[key]['now_price@zappos'] + "<br>" +
+					"OLD PRICE: " + obj[key]['orig_price@zappos'] + "<br>" +
+					"RATING: " + obj[key]['rating@zappos'] + "<br>"
+					+ "</td>";
+
+				dic[obj[key]["url@zappos"]] = 1
+			}
+			myTable+="</table>";
+			document.write(myTable);
+
+		}
+
+	//recommendation
+	document.write("Recommended elements");
+
+			var myTable= "<table><tr>";
+			var max =3;
+			var min = 1;
+			for (var key in rec_obj){
+			var randomNum = Math.floor(Math.random() * (max - min + 1)) + min;
+			var gender = "";
+			//document.write("<tr><td style='width: 100px'")
+			if (randomNum == 1 && (typeof rec_obj[key]["url@6pm"] != 'undefined')){
+				var str = "Link to product";
+				var link = str.link(rec_obj[key]['url@6pm']);
+				var val = rec_obj[key]['img@6pm'];
+				var desc = rec_obj[key]['imp_desc@6pm'];
+				console.log(desc);
+				if(desc.includes("women")){
+					gender = "women";
+				}
+				else if(desc.includes("men")){
+					gender = "men";
+				}
+				else if(desc.includes("girl")){
+					gender = "girl";
+				}
+				else if(desc.includes("boy")){
+					gender = "boy";
+				}
+				
+				console.log(gender);
+				/*
+				img = document.createElement('img');
+				img.src = val;
+				img.style.height = '300px';
+				img.style.width = '300px';
+				*/
+				
+				myTable += "<td>" + 
+					//document.body.appendChild(img) + 
+					"<img style='width:150px; height=150px;'src=" + val + " >" +
+					"<p>" + "URL: " + link  + "<br>" + 
+					"SELLER: " + "6pm" + "<br>" +
+					"BRAND: " + rec_obj[key]['brand@6pm'] + "<br>" +
+					"NOW PRICE: " + rec_obj[key]['now_price@6pm'] + "<br>" +
+					"OLD PRICE: " + rec_obj[key]['orig_price@6pm'] + "<br>" +
+					+ "</td>";
+
+				//dic[obj[key]["url@6pm"]] = 1
+			}
+
+			if (randomNum == 2 && (typeof rec_obj[key]["url@eastbay"] != 'undefined')){
+				var str = "Link to product";
+				var link = str.link(rec_obj[key]['url@eastbay']);
+				var val = "http://" + rec_obj[key]['img@eastbay'];
+				/*
+				img = document.createElement('img');
+				img.src = val;
+				img.style.height = '300px';
+				img.style.width = '300px';
+				*/
+				
+				myTable += "<td>" + 
+					//document.body.appendChild(img) +
+					"<img style='width:150px; height=150px;'src=" + val + " >" +
+					"<p>" + "URL: " + link  + "<br>" +
+					"SELLER: " + "Eastbay" + "<br>" +
+					"NOW PRICE: " + rec_obj[key]['now_price@eastbay'] + "<br>" +
+					"OLD PRICE: " + rec_obj[key]['orig_price@eastbay'] + "<br>"
+					+ "</td>";
+
+			}
+
+			if (randomNum == 3 && (typeof rec_obj[key]["url@zappos"] != 'undefined')){
+				var str = "Link to product";
+				var link = str.link(rec_obj[key]['url@zappos']);
+				var val = rec_obj[key]['img@zappos'];
+				/*
+				img = document.createElement('img');
+				img.src = val;
+				img.style.height = '300px';
+				img.style.width = '300px';
+				*/
+				
+				myTable += "<td>" + 
+					//document.body.appendChild(img) +
+					"<img style='width:150px; height=150px;'src=" + val + " >" +
+					"<p>" + "URL: " + link  + "<br>" +
+					"SELLER: " + "Zappos" + "<br>" +
+					"BRAND: " + rec_obj[key]['description@zappos'] + "<br>" +
+					"NOW PRICE: " + rec_obj[key]['now_price@zappos'] + "<br>" +
+					"OLD PRICE: " + rec_obj[key]['orig_price@zappos'] + "<br>" +
+					"RATING: " + rec_obj[key]['rating@zappos'] + "<br>"
+					+ "</td>";
+
+			}
+
+
+		}
+
+		myTable+="</table>";
+		document.write(myTable);
+
+	//past history
+
+	document.write("Past History");
+
+			var myTable= "<table><tr>";
+			var max =3;
+			var min = 1;
+			for (var key in past_hist){
+			var randomNum = Math.floor(Math.random() * (max - min + 1)) + min;
+			var gender = "";
+			//document.write("<tr><td style='width: 100px'")
+			if (randomNum == 1 && (typeof past_hist[key]["url@6pm"] != 'undefined')){
+				var str = "Link to product";
+				var link = str.link(past_hist[key]['url@6pm']);
+				var val = past_hist[key]['img@6pm'];
+				var desc = past_hist[key]['imp_desc@6pm'];
+				console.log(desc);
+				if(desc.includes("women")){
+					gender = "women";
+				}
+				else if(desc.includes("men")){
+					gender = "men";
+				}
+				else if(desc.includes("girl")){
+					gender = "girl";
+				}
+				else if(desc.includes("boy")){
+					gender = "boy";
+				}
+				
+				console.log(gender);
+				/*
+				img = document.createElement('img');
+				img.src = val;
+				img.style.height = '300px';
+				img.style.width = '300px';
+				*/
+				
+				myTable += "<td>" + 
+					//document.body.appendChild(img) + 
+					"<img style='width:150px; height=150px;'src=" + val + " >" +
+					"<p>" + "URL: " + link  + "<br>" + 
+					"SELLER: " + "6pm" + "<br>" +
+					"BRAND: " + past_hist[key]['brand@6pm'] + "<br>" +
+					"NOW PRICE: " + past_hist[key]['now_price@6pm'] + "<br>" +
+					"OLD PRICE: " + past_hist[key]['orig_price@6pm'] + "<br>" +
+					+ "</td>";
+
+				//dic[obj[key]["url@6pm"]] = 1
+			}
+
+			if (randomNum == 2 && (typeof past_hist[key]["url@eastbay"] != 'undefined')){
+				var str = "Link to product";
+				var link = str.link(past_hist[key]['url@eastbay']);
+				var val = "http://" + past_hist[key]['img@eastbay'];
+				/*
+				img = document.createElement('img');
+				img.src = val;
+				img.style.height = '300px';
+				img.style.width = '300px';
+				*/
+				
+				myTable += "<td>" + 
+					//document.body.appendChild(img) +
+					"<img style='width:150px; height=150px;'src=" + val + " >" +
+					"<p>" + "URL: " + link  + "<br>" +
+					"SELLER: " + "Eastbay" + "<br>" +
+					"NOW PRICE: " + past_hist[key]['now_price@eastbay'] + "<br>" +
+					"OLD PRICE: " + past_hist[key]['orig_price@eastbay'] + "<br>"
+					+ "</td>";
+
+			}
+
+			if (randomNum == 3 && (typeof past_hist[key]["url@zappos"] != 'undefined')){
+				var str = "Link to product";
+				var link = str.link(past_hist[key]['url@zappos']);
+				var val = past_hist[key]['img@zappos'];
+				/*
+				img = document.createElement('img');
+				img.src = val;
+				img.style.height = '300px';
+				img.style.width = '300px';
+				*/
+				
+				myTable += "<td>" + 
+					//document.body.appendChild(img) +
+					"<img style='width:150px; height=150px;'src=" + val + " >" +
+					"<p>" + "URL: " + link  + "<br>" +
+					"SELLER: " + "Zappos" + "<br>" +
+					"BRAND: " + past_hist[key]['description@zappos'] + "<br>" +
+					"NOW PRICE: " + past_hist[key]['now_price@zappos'] + "<br>" +
+					"OLD PRICE: " + past_hist[key]['orig_price@zappos'] + "<br>" +
+					"RATING: " + past_hist[key]['rating@zappos'] + "<br>"
+					+ "</td>";
+
+			}
+
+
+		}
+
+		myTable+="</table>";
+		document.write(myTable);	
+	</script>
+
+</body>
+</html>

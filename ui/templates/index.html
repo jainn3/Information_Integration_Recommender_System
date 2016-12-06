@@ -1,0 +1,61 @@
+<!doctype html>
+<html lang = "en">
+   <head>
+
+   <style type="text/css">
+#search {
+    position:fixed;
+    top: 70%;
+    left: 50%;
+    margin-top: -9em; /*set to a negative number 1/2 of your height*/
+    margin-left: -15em; /*set to a negative number 1/2 of your width*/
+
+}
+   </style>
+      <meta charset = "utf-8">
+      <title>jQuery UI Autocomplete functionality</title>
+      <link href = "https://code.jquery.com/ui/1.10.4/themes/ui-lightness/jquery-ui.css"
+         rel = "stylesheet">
+      <script src = "https://code.jquery.com/jquery-1.10.2.js"></script>
+      <script src = "https://code.jquery.com/ui/1.10.4/jquery-ui.js"></script>
+      
+      <!-- Javascript -->
+      <script>
+         var te = {{data|tojson}};
+         var text = JSON.parse(te);
+         var arr = [];
+         for (var key in text) {
+            arr.push(key)
+         }
+      </script>
+      <script type="text/javascript">
+         $(function() {
+
+            $( "#automplete" ).autocomplete({
+               source: function(request, response) {
+        var results = $.ui.autocomplete.filter(arr, request.term);
+
+        response(results.slice(0, 10));
+    }
+            });
+         });
+      </script>
+   </head>
+   
+   <body background="https://funds2orgs.com/wp-content/uploads/2016/09/FundraisingIdeas-ShoeDrive.jpg">
+      <!-- HTML -->
+      <div id="search">
+         
+         <form action="." method="POST"> 
+            <div class = "ui-widget">
+               <label for = "automplete">Search Shoes: </label>
+               <input id = "automplete" type="text" name="text">
+               <input type="submit" name="show_home" value="Find Shoes">
+            </div>
+         </form>
+
+      </div>
+
+
+   </body>
+</html>

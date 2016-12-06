@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+<body>
+
+<h2>Products</h2>
+
+<p id="demo"></p>
+
+<script>
+var text = '{"url": "http://www.dbshoes.net/vans-authenticcore-15882.html", "sku": "04MLJPM", "img": "http://d1v9k9jjlcf04n.cloudfront.net/15882-z.jpg", "gender": "men", "size": "1,9.5,12,11.5,1.5,3,4,5,6,7,8,9,3.5,4.5,5.5,6.5,7.5,1,8.5"}';
+var obj = JSON.parse(text);
+
+var str = "Link to product"
+var link = str.link(obj.url)
+document.write("SKU: " + obj.sku);
+document.getElementById("demo").innerHTML =
+link + "<br>" +
+obj.sku + "<br>" + 
+obj.gender + "<br>" + 
+obj.size  
+
+var val = obj.img
+img = document.createElement('img');
+img.src = val
+img.style.height = '300px';
+img.style.width = '200px';
+document.body.appendChild(img);
+
+</script>
+
+</body>
+</html>
