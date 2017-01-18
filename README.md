@@ -9,3 +9,6 @@ FRIL (Deduplication and Record Linkage)
 PyMongo (Storing and queying data)
 Javascript, HTML, CSS (Frontend)
 Recommender System (GraphLab)
+
+The raw, cleaned data, record linked data is uploaded on Google Drive and can be viewed using this link.
+https://drive.google.com/drive/folders/0Byogo7ARtNS6aTMyNW1FZDVRTGs?usp=sharing
